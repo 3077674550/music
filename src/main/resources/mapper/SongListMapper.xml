@@ -61,20 +61,21 @@
     
     <update id="update" parameterType="com.javaclimb.music.domain.SongList">
         update song_list
-        <set>
-            <if test="title != null">
-                #{title},
+        <set >
+            <if test="title != null" >
+                title = #{title,jdbcType=VARCHAR},
             </if>
-            <if test="pic != null">
-                #{pic},
+            <if test="pic != null" >
+                pic = #{pic,jdbcType=VARCHAR},
             </if>
-            <if test="introduction != null">
-                #{introduction},
+            <if test="style != null" >
+                style = #{style,jdbcType=VARCHAR},
             </if>
-            <if test="style != null">
-                #{style},
+            <if test="introduction != null" >
+                introduction = #{introduction,jdbcType=LONGVARCHAR},
             </if>
         </set>
+        where id = #{id,jdbcType=INTEGER}
     </update>
 
     <delete id="delete" parameterType="java.lang.Integer">

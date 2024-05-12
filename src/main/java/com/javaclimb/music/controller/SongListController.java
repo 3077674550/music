@@ -86,7 +86,7 @@ public class SongListController {
     /**
      * 删除歌单
      */
-    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    @RequestMapping(value = "/delete",method = RequestMethod.GET)
     public Object deleteSongList(HttpServletRequest request){
         String id = request.getParameter("id").trim();//主键
         boolean flag = songListService.delete(Integer.parseInt(id));
@@ -106,7 +106,7 @@ public class SongListController {
      * 查询所有歌单
      */
     @RequestMapping(value = "/allSongList",method = RequestMethod.GET)
-    public Object allSongList(HttpServletRequest request){
+    public Object allSongList(){
         return songListService.allSongList();
     }
 
