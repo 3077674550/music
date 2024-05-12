@@ -16,7 +16,7 @@
     <sql id="Base_Column_List">
         id,title,pic,style
     </sql>
-    
+
     <sql id="Blob_Column_List">
         id,title,pic,style,introduction
     </sql>

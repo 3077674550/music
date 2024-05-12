@@ -1,12 +1,14 @@
 package com.javaclimb.music.dao;
 
 import com.javaclimb.music.domain.SongList;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * 歌单dao
  */
+@Mapper
 public interface SongListMapper {
     /**
      * 增加
