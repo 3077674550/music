@@ -1,11 +1,8 @@
 package com.javaclimb.music.service;
 
 import com.javaclimb.music.domain.Singer;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
 public interface SingerService {
     //增加
     public boolean insert(Singer singer);

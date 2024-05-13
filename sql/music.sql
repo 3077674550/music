@@ -114,7 +114,7 @@ CREATE TABLE `list_song`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `rank`;
 CREATE TABLE `rank`  (
-  `id` int NOT NULL COMMENT '主键',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
   `song_list_id` int NULL DEFAULT NULL COMMENT '歌单id',
   `consumer_id` int NULL DEFAULT NULL COMMENT '用户id',
   `score` int NULL DEFAULT NULL COMMENT '评分',
