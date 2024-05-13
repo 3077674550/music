@@ -95,15 +95,15 @@ public class SongController {
             if(flag){
                 jsonObject.put(Consts.CODE,1);
                 jsonObject.put("avator", storeUrlPath);
-                jsonObject.put(Consts.MSG,"上传成功");
+                jsonObject.put(Consts.MSG,"音乐上传成功");
                 return jsonObject;
             }
             jsonObject.put(Consts.CODE,0);
-            jsonObject.put(Consts.MSG,"上传失败");
+            jsonObject.put(Consts.MSG,"音乐上传失败");
             return jsonObject;
         }catch (IOException e){
             jsonObject.put("code", 0);
-            jsonObject.put("msg", "上传失败" + e.getMessage());
+            jsonObject.put("msg", "音乐上传失败" + e.getMessage());
             return jsonObject;
         }finally {
             return jsonObject;

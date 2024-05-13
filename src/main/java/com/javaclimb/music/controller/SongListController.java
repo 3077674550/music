@@ -34,7 +34,7 @@ public class SongListController {
     public Object addSongList(HttpServletRequest request){
         JSONObject jsonObject = new JSONObject();
         String title = request.getParameter("title").trim();//歌单标题
-        String pic = request.getParameter("pic").trim();//歌单图片
+        String pic = "/img/songPic/example.jpg";
         String introduction = request.getParameter("introduction").trim();//简介
         String style = request.getParameter("style").trim();//风格
 
