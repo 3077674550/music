@@ -1,16 +1,18 @@
 package com.javaclimb.music.dao;
 
 import com.javaclimb.music.domain.Consumer;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
+
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface ConsumerMapper {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Consumer record);
+    //增加
+    int insert(Consumer consumer);
 
     int insertSelective(Consumer record);
 

@@ -1,12 +1,13 @@
 package com.javaclimb.music.dao;
 
 import com.javaclimb.music.domain.Collect;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface CollectMapper {
     int deleteByPrimaryKey(Integer id);
 

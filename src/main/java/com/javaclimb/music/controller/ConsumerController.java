@@ -2,10 +2,10 @@ package com.javaclimb.music.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.javaclimb.music.domain.Consumer;
-import com.javaclimb.music.service.impl.ConsumerServiceImpl;
+import com.javaclimb.music.service.ConsumerService;
+import com.javaclimb.music.utils.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -21,11 +20,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
-@Controller
 public class ConsumerController {
 
     @Autowired
-    private ConsumerServiceImpl consumerService;
+    private ConsumerService consumerService;
 
     @Configuration
     public class MyPicConfig implements WebMvcConfigurer {
@@ -45,14 +43,14 @@ public class ConsumerController {
         String sex = req.getParameter("sex").trim();
         String phone_num = req.getParameter("phone_num").trim();
         String email = req.getParameter("email").trim();
-        String birth = req.getParameter("birth").trim();
+        String birth = req.getParameter("birthday").trim();
         String introduction = req.getParameter("introduction").trim();
         String location = req.getParameter("location").trim();
         String avator = req.getParameter("avator").trim();
 
         if (username.equals("") || username == null){
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "用户名或密码错误");
+            jsonObject.put(Consts.CODE, 0);
+            jsonObject.put(Consts.MSG, "用户名或密码错误");
             return jsonObject;
         }
         Consumer consumer = new Consumer();
@@ -65,7 +63,9 @@ public class ConsumerController {
         }
         consumer.setUsername(username);
         consumer.setPassword(password);
-        consumer.setSex(new Byte(sex));
+
+        byte b=Byte.parseByte(sex);//将sex强转为byte类型
+        consumer.setSex(b);
         if (phone_num == "") {
             consumer.setPhoneNum(null);
         } else{
@@ -77,7 +77,7 @@ public class ConsumerController {
         } else{
             consumer.setEmail(email);
         }
-        consumer.setBirth(myBirth);
+        consumer.setBirthday(myBirth);
         consumer.setIntroduction(introduction);
         consumer.setLocation(location);
         consumer.setAvator(avator);
@@ -86,12 +86,12 @@ public class ConsumerController {
 
         boolean res = consumerService.addUser(consumer);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "注册成功");
+            jsonObject.put(Consts.CODE, 1);
+            jsonObject.put(Consts.MSG, "注册成功");
             return jsonObject;
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "注册失败");
+            jsonObject.put(Consts.CODE, 0);
+            jsonObject.put(Consts.MSG, "注册失败");
             return jsonObject;
         }
     }
@@ -108,14 +108,14 @@ public class ConsumerController {
         boolean res = consumerService.veritypasswd(username, password);
 
         if (res){
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "登录成功");
+            jsonObject.put(Consts.CODE, 1);
+            jsonObject.put(Consts.MSG, "登录成功");
             jsonObject.put("userMsg", consumerService.loginStatus(username));
             session.setAttribute("username", username);
             return jsonObject;
         }else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "用户名或密码错误");
+            jsonObject.put(Consts.CODE, 0);
+            jsonObject.put(Consts.MSG, "用户名或密码错误");
             return jsonObject;
         }
 
@@ -152,15 +152,15 @@ public class ConsumerController {
         String sex = req.getParameter("sex").trim();
         String phone_num = req.getParameter("phone_num").trim();
         String email = req.getParameter("email").trim();
-        String birth = req.getParameter("birth").trim();
+        String birth = req.getParameter("birthday").trim();
         String introduction = req.getParameter("introduction").trim();
         String location = req.getParameter("location").trim();
 //        String avator = req.getParameter("avator").trim();
 //        System.out.println(username+"  "+password+"  "+sex+"   "+phone_num+"     "+email+"      "+birth+"       "+introduction+"      "+location);
 
         if (username.equals("") || username == null){
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "用户名或密码错误");
+            jsonObject.put(Consts.CODE, 0);
+            jsonObject.put(Consts.MSG, "用户名或密码错误");
             return jsonObject;
         }
         Consumer consumer = new Consumer();
@@ -174,10 +174,11 @@ public class ConsumerController {
         consumer.setId(Integer.parseInt(id));
         consumer.setUsername(username);
         consumer.setPassword(password);
-        consumer.setSex(new Byte(sex));
+        byte b=Byte.parseByte(sex);//将sex强转为byte类型
+        consumer.setSex(b);
         consumer.setPhoneNum(phone_num);
         consumer.setEmail(email);
-        consumer.setBirth(myBirth);
+        consumer.setBirthday(myBirth);
         consumer.setIntroduction(introduction);
         consumer.setLocation(location);
 //        consumer.setAvator(avator);
@@ -185,12 +186,12 @@ public class ConsumerController {
 
         boolean res = consumerService.updateUserMsg(consumer);
         if (res){
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "修改成功");
+            jsonObject.put(Consts.CODE, 1);
+            jsonObject.put(Consts.MSG, "修改成功");
             return jsonObject;
         }else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "修改失败");
+            jsonObject.put(Consts.CODE, 0);
+            jsonObject.put(Consts.MSG, "修改失败");
             return jsonObject;
         }
     }
@@ -202,8 +203,8 @@ public class ConsumerController {
         JSONObject jsonObject = new JSONObject();
 
         if (avatorFile.isEmpty()) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "文件上传失败！");
+            jsonObject.put(Consts.CODE, 0);
+            jsonObject.put(Consts.MSG, "文件上传失败！");
             return jsonObject;
         }
         String fileName = System.currentTimeMillis()+avatorFile.getOriginalFilename();
@@ -222,18 +223,18 @@ public class ConsumerController {
             consumer.setAvator(storeAvatorPath);
             boolean res = consumerService.updateUserAvator(consumer);
             if (res){
-                jsonObject.put("code", 1);
+                jsonObject.put(Consts.CODE, 1);
                 jsonObject.put("avator", storeAvatorPath);
-                jsonObject.put("msg", "上传成功");
+                jsonObject.put(Consts.MSG, "上传成功");
                 return jsonObject;
             }else {
-                jsonObject.put("code", 0);
-                jsonObject.put("msg", "上传失败");
+                jsonObject.put(Consts.CODE, 0);
+                jsonObject.put(Consts.MSG, "上传失败");
                 return jsonObject;
             }
         }catch (IOException e){
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "上传失败"+e.getMessage());
+            jsonObject.put(Consts.CODE, 0);
+            jsonObject.put(Consts.MSG, "上传失败"+e.getMessage());
             return jsonObject;
         }finally {
             return jsonObject;

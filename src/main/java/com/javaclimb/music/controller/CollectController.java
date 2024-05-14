@@ -2,7 +2,8 @@ package com.javaclimb.music.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.javaclimb.music.domain.Collect;
-import com.javaclimb.music.service.impl.CollectServiceImpl;
+import com.javaclimb.music.service.CollectService;
+import com.javaclimb.music.utils.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @RestController
-@Controller
+
 public class CollectController {
 
     @Autowired
-    private CollectServiceImpl collectService;
+    private CollectService collectService;
 
     //    添加收藏的歌曲
     @ResponseBody
@@ -31,31 +32,34 @@ public class CollectController {
         String song_id=req.getParameter("songId");
         String song_list_id=req.getParameter("songListId");
         if (song_id == ""){
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "收藏歌曲为空");
+            jsonObject.put(Consts.CODE, 0);
+            jsonObject.put(Consts.MSG, "收藏歌曲为空");
             return jsonObject;
         } else if (collectService.existSongId(Integer.parseInt(user_id), Integer.parseInt(song_id))) {
-            jsonObject.put("code", 2);
-            jsonObject.put("msg", "已收藏");
+            jsonObject.put(Consts.CODE, 2);
+            jsonObject.put(Consts.MSG, "已收藏");
             return jsonObject;
         }
         Collect collect = new Collect();
         collect.setUserId(Integer.parseInt(user_id));
-        collect.setType(new Byte(type));
-        if (new Byte(type) == 0) {
+
+        byte b=Byte.parseByte(type);//将type强转为byte类型
+        collect.setType(b);
+
+        if (b == 0) {
             collect.setSongId(Integer.parseInt(song_id));
-        } else if (new Byte(type) == 1) {
+        } else if (b == 1) {
             collect.setSongListId(Integer.parseInt(song_list_id));
         }
         collect.setCreateTime(new Date());
         boolean res = collectService.addCollection(collect);
         if (res){
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "收藏成功");
+            jsonObject.put(Consts.CODE, 1);
+            jsonObject.put(Consts.MSG, "收藏成功");
             return jsonObject;
         }else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "收藏失败");
+            jsonObject.put(Consts.CODE, 0);
+            jsonObject.put(Consts.MSG, "收藏失败");
             return jsonObject;
         }
     }
@@ -95,17 +99,18 @@ public class CollectController {
         Collect collect = new Collect();
         collect.setId(Integer.parseInt(id));
         collect.setUserId(Integer.parseInt(user_id));
-        collect.setType(new Byte(type));
+        byte b=Byte.parseByte(type);//将type强转为byte类型
+        collect.setType(b);
         collect.setSongId(Integer.parseInt(song_id));
 
         boolean res = collectService.updateCollectMsg(collect);
         if (res){
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "修改成功");
+            jsonObject.put(Consts.CODE, 1);
+            jsonObject.put(Consts.MSG, "修改成功");
             return jsonObject;
         }else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "修改失败");
+            jsonObject.put(Consts.CODE, 0);
+            jsonObject.put(Consts.MSG, "修改失败");
             return jsonObject;
         }
     }

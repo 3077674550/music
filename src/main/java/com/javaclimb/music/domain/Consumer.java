@@ -18,7 +18,7 @@ public class Consumer {
 
     private String email;
 
-    private Date birth;
+    private Date birthday;
 
     private String introduction;
 
@@ -78,12 +78,12 @@ public class Consumer {
         this.email = email == null ? null : email.trim();
     }
 
-    public Date getBirth() {
-        return birth;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public void setBirth(Date birth) {
-        this.birth = birth;
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public String getIntroduction() {
