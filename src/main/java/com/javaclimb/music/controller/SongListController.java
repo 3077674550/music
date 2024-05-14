@@ -62,13 +62,11 @@ public class SongListController {
         JSONObject jsonObject = new JSONObject();
         String id = request.getParameter("id").trim();//主键
         String title = request.getParameter("title").trim();//歌单标题
-        String pic = request.getParameter("pic").trim();//歌单图片
         String introduction = request.getParameter("introduction").trim();//简介
         String style = request.getParameter("style").trim();//风格
         //保存到歌单的对象里
         SongList songList = new SongList();
         songList.setTitle(title);
-        songList.setPic(pic);
         songList.setIntroduction(introduction);
         songList.setStyle(style);
         boolean flag = songListService.update(songList);
@@ -139,7 +137,7 @@ public class SongListController {
     /**
      * 更改歌单图片
      */
-    @RequestMapping(value = "/updateSongListPic",method = RequestMethod.POST)
+    @RequestMapping(value = "/update/songListPic",method = RequestMethod.POST)
     public Object updateSongListPic(@RequestParam("file")MultipartFile avatorFile, @RequestParam("id")int id){
         JSONObject jsonObject = new JSONObject();
         if(avatorFile.isEmpty()){

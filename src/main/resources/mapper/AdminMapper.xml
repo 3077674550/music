@@ -69,7 +69,6 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.javaclimb.music.domain.Admin">
-
         update admin
         set name = #{name,jdbcType=VARCHAR},
         password = #{password,jdbcType=VARCHAR}
