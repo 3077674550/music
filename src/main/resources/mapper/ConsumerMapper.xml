@@ -9,7 +9,14 @@
         <result column="sex" property="sex" jdbcType="TINYINT" />
         <result column="phone_num" property="phoneNum" jdbcType="CHAR" />
         <result column="email" property="email" jdbcType="CHAR" />
-        <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+        <result column="birt
+
+
+
+
+
+
+        hday" property="birthday" jdbcType="TIMESTAMP" />
         <result column="introduction" property="introduction" jdbcType="VARCHAR" />
         <result column="location" property="location" jdbcType="VARCHAR" />
         <result column="avator" property="avator" jdbcType="VARCHAR" />
@@ -208,4 +215,5 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <update id="userOfId"></update>
 </mapper>

@@ -10,7 +10,7 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.javaclimb.music.domain.Rank">
-        insert into rank
+        insert into `rank`
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="id != null" >
                 id,

@@ -16,9 +16,9 @@ public interface ConsumerMapper {
 
     int insertSelective(Consumer record);
 
-    Consumer selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Consumer record);
+
+
 
     int updateByPrimaryKey(Consumer record);
 
@@ -26,7 +26,7 @@ public interface ConsumerMapper {
 
     int existUsername(String username);
 
-    int addUser(Consumer consumer);
+
 
     int updateUserMsg(Consumer record);
 
