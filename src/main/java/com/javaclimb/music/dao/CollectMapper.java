@@ -9,7 +9,6 @@ import java.util.List;
 
 @Mapper
 public interface CollectMapper {
-    int deleteByPrimaryKey(Integer id);
 
     int insert(Collect record);
 
@@ -17,7 +16,7 @@ public interface CollectMapper {
 
     Collect selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Collect record);
+
 
     int updateByPrimaryKey(Collect record);
 

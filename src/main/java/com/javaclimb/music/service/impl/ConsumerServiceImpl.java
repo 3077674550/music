@@ -15,38 +15,57 @@ public class ConsumerServiceImpl implements ConsumerService {
     private ConsumerMapper consumerMapper;
 
     @Override
-    public boolean insert(Consumer consumer) {
-        return consumerMapper.insert(consumer)>0;
+    public boolean addUser(Consumer consumer) {
+        return consumerMapper.insertSelective(consumer) >0 ?true:false;
     }
 
     @Override
-    public boolean update(Consumer consumer) {
-        return consumerMapper.update(consumer)>0;
+    public boolean updateUserMsg(Consumer consumer) {
+        return consumerMapper.updateUserMsg(consumer) >0 ?true:false;
     }
 
     @Override
-    public boolean delete(Integer id) {
-        return consumerMapper.delete(id)>0;
+    public boolean updateUserAvator(Consumer consumer) {
+
+        return consumerMapper.updateUserAvator(consumer) >0 ?true:false;
     }
 
     @Override
-    public Consumer selectByPrimaryKey(Integer id) {
-        return consumerMapper.selectByPrimaryKey(id);
+    public boolean existUser(String username) {
+        return consumerMapper.existUsername(username)>0 ? true:false;
+    }
+
+    /**
+     *
+     * @param username
+     * @param password
+     */
+    @Override
+    public boolean veritypasswd(String username, String password) {
+        return consumerMapper.verifyPassword(username, password)>0;
+    }
+
+    //    删除用户
+    @Override
+    public boolean deleteUser(Integer id) {
+        return consumerMapper.deleteUser(id) >0;
     }
 
     @Override
-    public List<Consumer> allConsumer() {
-        return consumerMapper.allConsumer();
+    public List<Consumer> allUser() {
+        return consumerMapper.allUser();
     }
 
     @Override
-    public boolean vertifyPassword(String username, String password) {
-        return consumerMapper.vertifyPassword(username,password)>0;
+    public List<Consumer> userOfId(Integer id) {
+
+        return consumerMapper.userOfId(id);
     }
 
     @Override
-    public Consumer getByUsername(String username) {
-        return consumerMapper.getByUsername(username);
+    public List<Consumer> loginStatus(String username) {
+
+        return consumerMapper.loginStatus(username);
     }
 }
 
