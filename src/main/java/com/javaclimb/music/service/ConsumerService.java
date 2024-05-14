@@ -6,22 +6,25 @@ import java.util.List;
 
 public interface ConsumerService {
 
-    boolean addUser(Consumer consumer);
+    //增加
+    boolean insert(Consumer consumer);
 
-    boolean updateUserMsg(Consumer consumer);
+    //修改
+    boolean update(Consumer consumer);
 
-    boolean updateUserAvator(Consumer consumer);
+    //删除
+    boolean delete(Integer id);
 
-    boolean existUser(String username);
+    //根据主键查询整个对象
+    Consumer selectByPrimaryKey(Integer id);
 
-    boolean veritypasswd(String username, String password);
+    //查询所有用户
+    List<Consumer> allConsumer();
 
-    boolean deleteUser(Integer id);
+    //修改密码
+    boolean vertifyPassword(String username,String password);
 
-    List<Consumer> allUser();
-
-    List<Consumer> userOfId(Integer id);
-
-    List<Consumer> loginStatus(String username);
+    //根据账号查询
+    Consumer getByUsername(String username);
 
 }

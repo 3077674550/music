@@ -84,7 +84,7 @@ public class ConsumerController {
         consumer.setCreateTime(new Date());
         consumer.setUpdateTime(new Date());
 
-        boolean res = consumerService.addUser(consumer);
+        boolean res = consumerService.insert(consumer);
         if (res) {
             jsonObject.put(Consts.CODE, 1);
             jsonObject.put(Consts.MSG, "注册成功");
@@ -102,15 +102,15 @@ public class ConsumerController {
     public Object loginStatus(HttpServletRequest req, HttpSession session){
 
         JSONObject jsonObject = new JSONObject();
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-//        System.out.println(username+"  "+password);
-        boolean res = consumerService.veritypasswd(username, password);
+        String username = req.getParameter("username").trim();
+        String password = req.getParameter("password").trim();
+        //System.out.println(username+"  "+password);
+        boolean res = consumerService.vertifyPassword(username, password);
 
         if (res){
             jsonObject.put(Consts.CODE, 1);
             jsonObject.put(Consts.MSG, "登录成功");
-            jsonObject.put("userMsg", consumerService.loginStatus(username));
+            jsonObject.put("userMsg", consumerService.getByUsername(username));
             session.setAttribute("username", username);
             return jsonObject;
         }else {
@@ -124,21 +124,21 @@ public class ConsumerController {
     //    返回所有用户
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public Object allUser(){
-        return consumerService.allUser();
+        return consumerService.allConsumer();
     }
 
     //    返回指定ID的用户
     @RequestMapping(value = "/user/detail", method = RequestMethod.GET)
     public Object userOfId(HttpServletRequest req){
         String id = req.getParameter("id");
-        return consumerService.userOfId(Integer.parseInt(id));
+        return consumerService.selectByPrimaryKey(Integer.parseInt(id));
     }
 
     //    删除用户
     @RequestMapping(value = "/user/delete", method = RequestMethod.GET)
     public Object deleteUser(HttpServletRequest req){
         String id = req.getParameter("id");
-        return consumerService.deleteUser(Integer.parseInt(id));
+        return consumerService.delete(Integer.parseInt(id));
     }
 
     //    更新用户信息
@@ -155,7 +155,7 @@ public class ConsumerController {
         String birth = req.getParameter("birthday").trim();
         String introduction = req.getParameter("introduction").trim();
         String location = req.getParameter("location").trim();
-//        String avator = req.getParameter("avator").trim();
+        //String avator = req.getParameter("avator").trim();
 //        System.out.println(username+"  "+password+"  "+sex+"   "+phone_num+"     "+email+"      "+birth+"       "+introduction+"      "+location);
 
         if (username.equals("") || username == null){
@@ -181,10 +181,10 @@ public class ConsumerController {
         consumer.setBirthday(myBirth);
         consumer.setIntroduction(introduction);
         consumer.setLocation(location);
-//        consumer.setAvator(avator);
+        //consumer.setAvator(avator);
         consumer.setUpdateTime(new Date());
 
-        boolean res = consumerService.updateUserMsg(consumer);
+        boolean res = consumerService.update(consumer);
         if (res){
             jsonObject.put(Consts.CODE, 1);
             jsonObject.put(Consts.MSG, "修改成功");
@@ -221,7 +221,7 @@ public class ConsumerController {
             Consumer consumer = new Consumer();
             consumer.setId(id);
             consumer.setAvator(storeAvatorPath);
-            boolean res = consumerService.updateUserAvator(consumer);
+            boolean res = consumerService.update(consumer);
             if (res){
                 jsonObject.put(Consts.CODE, 1);
                 jsonObject.put("avator", storeAvatorPath);

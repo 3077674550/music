@@ -9,35 +9,25 @@ import java.util.List;
 @Mapper
 public interface ConsumerMapper {
 
-    int deleteByPrimaryKey(Integer id);
-
     //增加
     int insert(Consumer consumer);
 
-    int insertSelective(Consumer record);
+    //修改
+    int update(Consumer consumer);
 
+    //删除
+    int delete(Integer id);
+
+    //根据主键查询整个对象
     Consumer selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Consumer record);
+    //查询所有用户
+    public List<Consumer> allConsumer();
 
-    int updateByPrimaryKey(Consumer record);
+    //验证密码
+    int vertifyPassword(String username,String password);
 
-    int verifyPassword(String username, String password);
-
-    int existUsername(String username);
-
-    int addUser(Consumer consumer);
-
-    int updateUserMsg(Consumer record);
-
-    int updateUserAvator(Consumer record);
-
-    int deleteUser(Integer id);
-
-    List<Consumer> allUser();
-
-    List<Consumer> userOfId(Integer id);
-
-    List<Consumer> loginStatus(String username);
+    //根据账号查询
+    Consumer getByUsername(String username);
 
 }
