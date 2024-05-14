@@ -1,0 +1,74 @@
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaclimb.music.dao.LyricMapper">
+    <resultMap id="BaseResultMap" type="com.javaclimb.music.domain.Lyric" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="song_id" jdbcType="INTEGER" property="songId"/>
+        <result column="timestamp" jdbcType="LONGVARCHAR" property="timestamp"/>
+        <result column="lyric_text" jdbcType="LONGVARCHAR" property="lyricText"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id,song_id,timestamp,lyric_text
+    </sql>
+    
+    <insert id="insertLyric" parameterType="com.javaclimb.music.domain.Lyric">
+        insert into lyric
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="songId != null">
+                song_id,
+            </if>
+            <if test="timestamp != null">
+                timestamp,
+            </if>
+            <if test="lyricText != null">
+                lyric_text,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="songId != null">
+                #{songId},
+            </if>
+            <if test="timestamp != null">
+                #{timestamp},
+            </if>
+            <if test="lyricText != null">
+                #{lyricText},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteLyric" parameterType="java.lang.Integer">
+        delete from lyric
+        where id = #{id}
+    </delete>
+
+    <update id="updateLyric" parameterType="java.lang.Integer">
+        update lyric
+        <set>
+            <if test="songId != null">
+                song_id = #{songId},
+            </if>
+            <if test="timestamp != null">
+                timestamp = #{timestamp},
+            </if>
+            <if test="lyricText != null">
+                lyric_text = #{lyricText},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="lyricsOfSong" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select *
+        from lyric
+        where song_id = #{songId}
+    </select>
+</mapper>
