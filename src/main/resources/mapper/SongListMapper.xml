@@ -80,7 +80,7 @@
 
     <delete id="delete" parameterType="java.lang.Integer">
         delete from song_list
-        where id=#{id};
+        where id=#{id}
     </delete>
 
     <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">

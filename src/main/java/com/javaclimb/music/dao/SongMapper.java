@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- * 歌手dao
+ * 歌曲dao
  */
 @Mapper
 public interface SongMapper {
