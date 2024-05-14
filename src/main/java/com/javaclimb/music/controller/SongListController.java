@@ -66,6 +66,7 @@ public class SongListController {
         String style = request.getParameter("style").trim();//风格
         //保存到歌单的对象里
         SongList songList = new SongList();
+        songList.setId(Integer.valueOf(id));
         songList.setTitle(title);
         songList.setIntroduction(introduction);
         songList.setStyle(style);
