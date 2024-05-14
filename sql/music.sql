@@ -60,7 +60,7 @@ CREATE TABLE `comment`  (
   `type` tinyint(1) NULL DEFAULT NULL COMMENT '评论类型，0歌曲，1歌单',
   `song_id` int NULL DEFAULT NULL COMMENT '歌曲id',
   `song_list_id` int NULL DEFAULT NULL COMMENT '歌单id',
-  `comment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '评论内容',
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '评论内容',
   `create_time` datetime NULL DEFAULT NULL COMMENT '评论时间',
   `up` int NULL DEFAULT 0 COMMENT '评论点赞数',
   PRIMARY KEY (`id`) USING BTREE

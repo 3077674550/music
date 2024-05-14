@@ -41,7 +41,7 @@ public class RankController {
         return jsonObject;
     }
 
-    //计算平均分
+    /*//计算平均分*/
     @GetMapping("/rank")
     public Object rankOfSongListId(HttpServletRequest request){
         String songListId = request.getParameter("songListId");
