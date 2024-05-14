@@ -3,6 +3,7 @@ package com.javaclimb.music.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.javaclimb.music.domain.Consumer;
 import com.javaclimb.music.service.ConsumerService;
+import com.javaclimb.music.service.impl.ConsumerServiceImpl;
 import com.javaclimb.music.utils.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +25,7 @@ import java.util.List;
 public class ConsumerController {
 
     @Autowired
-    private ConsumerService consumerService;
+    private ConsumerServiceImpl consumerService;
 
     @Configuration
     public class MyPicConfig implements WebMvcConfigurer {

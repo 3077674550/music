@@ -35,16 +35,20 @@ public class ConsumerServiceImpl implements ConsumerService {
         return consumerMapper.existUsername(username)>0 ? true:false;
     }
 
+    /**
+     *
+     * @param username
+     * @param password
+     */
     @Override
     public boolean veritypasswd(String username, String password) {
-
-        return consumerMapper.verifyPassword(username, password)>0?true:false;
+        return consumerMapper.verifyPassword(username, password)>0;
     }
 
     //    删除用户
     @Override
     public boolean deleteUser(Integer id) {
-        return consumerMapper.deleteUser(id) >0 ?true:false;
+        return consumerMapper.deleteUser(id) >0;
     }
 
     @Override
