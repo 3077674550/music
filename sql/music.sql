@@ -11,7 +11,7 @@
  Target Server Version : 80300
  File Encoding         : 65001
 
- Date: 07/05/2024 00:01:35
+ Date: 14/05/2024 12:40:33
 */
 
 SET NAMES utf8mb4;
@@ -60,7 +60,7 @@ CREATE TABLE `comment`  (
   `type` tinyint(1) NULL DEFAULT NULL COMMENT '评论类型，0歌曲，1歌单',
   `song_id` int NULL DEFAULT NULL COMMENT '歌曲id',
   `song_list_id` int NULL DEFAULT NULL COMMENT '歌单id',
-  `comment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '评论内容',
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '评论内容',
   `create_time` datetime NULL DEFAULT NULL COMMENT '评论时间',
   `up` int NULL DEFAULT 0 COMMENT '评论点赞数',
   PRIMARY KEY (`id`) USING BTREE
@@ -103,10 +103,27 @@ CREATE TABLE `list_song`  (
   `song_id` int NULL DEFAULT NULL COMMENT '歌曲id',
   `song_list_id` int NULL DEFAULT NULL COMMENT '歌单id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '歌单包含歌曲列表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '歌单包含歌曲列表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of list_song
+-- ----------------------------
+INSERT INTO `list_song` VALUES (1, 2, 1);
+
+-- ----------------------------
+-- Table structure for lyric
+-- ----------------------------
+DROP TABLE IF EXISTS `lyric`;
+CREATE TABLE `lyric`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `song_id` int NULL DEFAULT NULL COMMENT '歌曲id',
+  `timestamp` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '歌词时间戳',
+  `lyric_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '歌词',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of lyric
 -- ----------------------------
 
 -- ----------------------------
@@ -159,11 +176,13 @@ CREATE TABLE `song`  (
   `lyric` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '歌词',
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '歌曲地址',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '歌曲' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '歌曲' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of song
 -- ----------------------------
+INSERT INTO `song` VALUES (1, 3, 'like_magic', 'jyp family song', '2024-05-12 15:18:55', '2024-05-13 00:25:29', '/img/songPic/1715531128988example.jpg', 'its just like magic', '/song/J_Y_ Park _ Stray Kids _ ITZY _ NMIXX - Like Magic.ogg');
+INSERT INTO `song` VALUES (2, 2, '江南', '经典歌曲', '2024-05-13 23:19:28', '2024-05-13 23:20:48', '/img/songPic/1715613648376example.jpg', '圈圈圆圆圈圈', '/song/林俊杰 - 江南.ogg');
 
 -- ----------------------------
 -- Table structure for song_list
@@ -176,10 +195,12 @@ CREATE TABLE `song_list`  (
   `introduction` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '简介',
   `style` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '风格',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '歌单管理' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '歌单管理' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of song_list
 -- ----------------------------
+INSERT INTO `song_list` VALUES (2, 'KPOP', '/img/songPic/example.jpg', '韩流音乐', 'pop');
+INSERT INTO `song_list` VALUES (3, '华流', '/img/songPic/example.jpg', '华语流行音乐', 'pop');
 
 SET FOREIGN_KEY_CHECKS = 1;
