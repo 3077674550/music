@@ -22,8 +22,7 @@ public class Song implements Serializable {
     private Date updateTime;
     //歌曲图片
     private String pic;
-    //歌词
-    private String lyric;
+
     //歌曲地址
     private String url;
 
@@ -81,14 +80,6 @@ public class Song implements Serializable {
 
     public void setPic(String pic) {
         this.pic = pic;
-    }
-
-    public String getLyric() {
-        return lyric;
-    }
-
-    public void setLyric(String lyric) {
-        this.lyric = lyric;
     }
 
     public String getUrl() {
