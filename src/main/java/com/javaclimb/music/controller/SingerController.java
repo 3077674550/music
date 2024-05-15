@@ -6,8 +6,11 @@ import com.javaclimb.music.service.SingerService;
 import com.javaclimb.music.utils.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -143,5 +146,51 @@ public class SingerController {
     public Object singerOfSex(HttpServletRequest request){
         String sex=request.getParameter("sex").trim();
         return singerService.SingerOfSex(Integer.parseInt(sex));
+    }
+
+    /**
+     * 更新歌手图片
+     */
+    @ResponseBody
+    @RequestMapping(value = "/update/singerPic",method = RequestMethod.POST)
+    public Object updateSongPic(@RequestParam("pic") MultipartFile pic, @RequestParam("id") int id){
+        JSONObject jsonObject = new JSONObject();
+
+        if(pic.isEmpty()){
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"上传图片失败");
+            return jsonObject;
+        }
+        String fileName = System.currentTimeMillis()+pic.getOriginalFilename();
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator")  + "singerPic";
+        File file1 = new File(filePath);
+        if(!file1.exists()){
+            file1.mkdir();
+        }
+
+        File dest = new File(filePath+System.getProperty("file.separator")+fileName);
+        String urlStore = "/singerPic/"+fileName;
+        try {
+            pic.transferTo(dest);
+            Singer singer=new Singer();
+            singer.setId(id);
+            singer.setPic(urlStore);
+            boolean flag = singerService.update(singer);
+            if(flag){
+                jsonObject.put(Consts.CODE,1);
+                jsonObject.put(Consts.MSG,"更新图片成功");
+                jsonObject.put("avator",urlStore);
+                return jsonObject;
+            }
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"更新图片失败");
+            return jsonObject;
+        }catch (IOException e){
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"更新图片失败"+e.getMessage());
+            return jsonObject;
+        }finally {
+            return jsonObject;
+        }
     }
 }

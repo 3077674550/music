@@ -21,10 +21,13 @@ public interface ConsumerService {
     //查询所有用户
     List<Consumer> allConsumer();
 
-    //修改密码
+    //验证
     boolean vertifyPassword(String username,String password);
 
     //根据账号查询
     Consumer getByUsername(String username);
+
+    //更新用户头像
+    boolean updateUserAvator(Consumer consumer);
 
 }

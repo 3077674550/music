@@ -8,14 +8,7 @@
         <result column="sex" property="sex" jdbcType="TINYINT" />
         <result column="phone_num" property="phoneNum" jdbcType="CHAR" />
         <result column="email" property="email" jdbcType="CHAR" />
-        <result column="birt
-
-
-
-
-
-
-        hday" property="birthday" jdbcType="TIMESTAMP" />
+        <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
         <result column="introduction" property="introduction" jdbcType="VARCHAR" />
         <result column="location" property="location" jdbcType="VARCHAR" />
         <result column="avator" property="avator" jdbcType="VARCHAR" />
@@ -26,55 +19,38 @@
         id, username, password, sex, phone_num, email, birthday, introduction, location, avator, create_time, update_time
     </sql>
 
-    <select id="deleteByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-        delete
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
         <include refid="Base_Column_List" />
         from consumer
         where id = #{id,jdbcType=INTEGER}
     </select>
 
-    <select id="verifyPassword" resultType="java.lang.Integer"  >
+    <select id="verifyPassword" resultType="java.lang.Integer"  parameterType="java.util.HashMap">
         select count(*)
         from consumer
         where username = #{arg0} and password = #{arg1};
     </select>
 
-    <select id="existUsername" resultType="java.lang.Integer" parameterType="java.lang.String">
-        select count(*)
+    <select id="existUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
         from consumer
         where username = #{username, jdbcType=VARCHAR}
     </select>
 
-    <select id="loginStatus" resultMap="BaseResultMap">
-        select *
-        from consumer
-        where username = #{username,jdbcType=INTEGER}
-    </select>
-
     <select id="allUser" resultMap="BaseResultMap">
-        select *
+        select
+        <include refid="Base_Column_List" />
         from consumer
     </select>
 
     <delete id="deleteUser" parameterType="java.lang.Integer" >
-
         delete from consumer
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
     <insert id="insert" parameterType="com.javaclimb.music.domain.Consumer" >
-
-        insert into consumer (id, username, password,
-        sex, phone_num, email, birthday,
-        introduction, location, avator,
-        create_time, update_time)
-        values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-        #{sex,jdbcType=TINYINT}, #{phoneNum,jdbcType=CHAR}, #{email,jdbcType=CHAR}, #{birthday,jdbcType=TIMESTAMP},
-        #{introduction,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{avator,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
-    </insert>
-
-    <insert id="insertSelective" parameterType="com.javaclimb.music.domain.Consumer" >
 
         insert into consumer
         <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -105,12 +81,7 @@
             <if test="avator != null" >
                 avator,
             </if>
-            <if test="createTime != null" >
-                create_time,
-            </if>
-            <if test="updateTime != null" >
-                update_time,
-            </if>
+            create_time,update_time,
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="username != null" >
@@ -140,12 +111,7 @@
             <if test="avator != null" >
                 #{avator,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null" >
-                #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateTime != null" >
-                #{updateTime,jdbcType=TIMESTAMP},
-            </if>
+            now(),now(),
         </trim>
     </insert>
 
@@ -180,12 +146,7 @@
             <if test="avator != null" >
                 avator = #{avator,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null" >
-                create_time = #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateTime != null" >
-                update_time = #{updateTime,jdbcType=TIMESTAMP},
-            </if>
+            update_time=now(),
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -200,21 +161,4 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.javaclimb.music.domain.Consumer" >
-
-        update consumer
-        set username = #{username,jdbcType=VARCHAR},
-        password = #{password,jdbcType=VARCHAR},
-        sex = #{sex,jdbcType=TINYINT},
-        phone_num = #{phoneNum,jdbcType=CHAR},
-        email = #{email,jdbcType=CHAR},
-        birthday = #{birthday,jdbcType=TIMESTAMP},
-        introduction = #{introduction,jdbcType=VARCHAR}
-        location = #{location,jdbcType=VARCHAR},
-        avator = #{avator,jdbcType=VARCHAR},
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="userOfId"></update>
 </mapper>

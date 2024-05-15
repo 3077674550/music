@@ -3,7 +3,6 @@ package com.javaclimb.music.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.javaclimb.music.domain.Consumer;
 import com.javaclimb.music.service.ConsumerService;
-import com.javaclimb.music.service.impl.ConsumerServiceImpl;
 import com.javaclimb.music.utils.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import javax.validation.constraints.NotNull;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -19,13 +17,12 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @RestController
 public class ConsumerController {
 
     @Autowired
-    private ConsumerServiceImpl consumerService;
+    private ConsumerService consumerService;
 
     @Configuration
     public class MyPicConfig implements WebMvcConfigurer {
