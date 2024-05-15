@@ -14,7 +14,6 @@
 
     <resultMap id="ResultMapWithBLOBs" type="com.javaclimb.music.domain.Song" extends="BaseResultMap">
         <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
-        <result column="lyric" jdbcType="LONGVARCHAR" property="lyric"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -22,7 +21,7 @@
     </sql>
 
     <sql id="Blob_Column_List">
-        id,singer_id,name,create_time,update_time,pic,url,introduction,lyric
+        id,singer_id,name,create_time,update_time,pic,url,introduction
     </sql>
 
     <insert id="insert" parameterType="com.javaclimb.music.domain.Song">
@@ -43,9 +42,6 @@
             create_time,update_time,
             <if test="pic != null" >
                 pic,
-            </if>
-            <if test="lyric != null" >
-                lyric,
             </if>
             <if test="url != null" >
                 url,
@@ -68,9 +64,6 @@
             <if test="pic != null" >
                 #{pic},
             </if>
-            <if test="lyric != null" >
-                #{lyric},
-            </if>
             <if test="url != null" >
                 #{url},
             </if>
@@ -92,9 +85,6 @@
             update_time = now(),
             <if test="pic != null" >
                 pic = #{pic},
-            </if>
-            <if test="lyric != null" >
-                lyric = #{lyric},
             </if>
             <if test="url != null" >
                 url = #{url},

@@ -63,7 +63,6 @@ public class SongController {
         String name = request.getParameter("name").trim();//歌名
         String introduction = request.getParameter("introduction").trim();
         String pic = "/img/songPic/example.jpg";
-        String lyric = request.getParameter("lyric").trim();
 
         if(mpFile.isEmpty()){
             jsonObject.put(Consts.CODE,0);
@@ -88,7 +87,6 @@ public class SongController {
             song.setIntroduction(introduction);
             song.setCreateTime(new Date());
             song.setUpdateTime(new Date());
-            song.setLyric(lyric);
             song.setPic(pic);
             song.setUrl(storeUrlPath);
             boolean flag = songService.insert(song);
@@ -120,7 +118,6 @@ public class SongController {
         String singer_id = request.getParameter("singerId").trim();
         String name = request.getParameter("name").trim();
         String introduction = request.getParameter("introduction").trim();
-        String lyric = request.getParameter("lyric").trim();
 
         Song song = new Song();
         song.setId(Integer.valueOf(id));
@@ -128,7 +125,6 @@ public class SongController {
         song.setName(name);
         song.setIntroduction(introduction);
         song.setUpdateTime(new Date());
-        song.setLyric(lyric);
 
         boolean flag = songService.update(song);
         if(flag){
