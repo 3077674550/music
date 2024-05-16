@@ -2,6 +2,8 @@ package com.javaclimb.music.service.impl;
 
 import com.javaclimb.music.dao.ListSongMapper;
 import com.javaclimb.music.domain.ListSong;
+import com.javaclimb.music.domain.Song;
+import com.javaclimb.music.domain.SongList;
 import com.javaclimb.music.service.ListSongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,7 @@ public class ListSongServiceImpl implements ListSongService {
      */
     @Override
     public boolean insert(ListSong record) {
-        return listSongMapper.insert(record)>0;
+        return listSongMapper.insert(record) > 0;
     }
 
     /**
@@ -31,7 +33,7 @@ public class ListSongServiceImpl implements ListSongService {
      */
     @Override
     public boolean update(ListSong record) {
-        return listSongMapper.update(record)>0;
+        return listSongMapper.update(record) > 0;
     }
 
     /**
@@ -41,7 +43,7 @@ public class ListSongServiceImpl implements ListSongService {
      */
     @Override
     public boolean deleteSong(ListSong record) {
-        return listSongMapper.deleteSong(record)>0;
+        return listSongMapper.deleteSong(record) > 0;
     }
 
     /**
@@ -66,10 +68,11 @@ public class ListSongServiceImpl implements ListSongService {
     /**
      * 根据歌曲id查找
      *
-     * @param songId
+     * @param songListId
      */
     @Override
-    public List<ListSong> selectBySongListId(Integer songId) {
-        return listSongMapper.selectBySongListId(songId);
+    public List<Song> selectSongBySongListId(Integer songListId) {
+        return listSongMapper.selectSongBySongListId(songListId);
     }
+
 }

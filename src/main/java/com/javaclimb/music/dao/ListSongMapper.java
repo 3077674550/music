@@ -1,6 +1,8 @@
 package com.javaclimb.music.dao;
 
 import com.javaclimb.music.domain.ListSong;
+import com.javaclimb.music.domain.Song;
+import com.javaclimb.music.domain.SongList;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,7 +35,8 @@ public interface ListSongMapper {
     List<ListSong> allListSong();
 
     /**
-     * 根据歌单id查找歌单
+     * 根据歌单id查找歌单里的歌曲
      */
-    List<ListSong> selectBySongListId(Integer songId);
+    List<Song> selectSongBySongListId(Integer songListId);
+
 }

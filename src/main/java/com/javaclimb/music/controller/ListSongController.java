@@ -92,12 +92,12 @@ public class ListSongController {
     }
 
     /**
-     * 根据歌单id查找歌单
+     * 根据歌单id返回歌单的歌曲信息
      */
     @RequestMapping(value = "/select/songListId",method = RequestMethod.GET)
-    public Object selectBySongListId(HttpServletRequest request){
+    public Object selectSongBySongListId(HttpServletRequest request){
         String song_list_id = request.getParameter("songListId").trim();
-        return listSongServiceImpl.selectBySongListId(Integer.valueOf(song_list_id));
+        return listSongServiceImpl.selectSongBySongListId(Integer.valueOf(song_list_id));
     }
 
     /**
@@ -107,5 +107,6 @@ public class ListSongController {
     public Object allListSong(){
         return listSongServiceImpl.allListSong();
     }
+
 
 }

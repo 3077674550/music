@@ -8,6 +8,16 @@
         <result column="song_list_id" jdbcType="INTEGER" property="songListId"/>
     </resultMap>
 
+    <resultMap id="BaseResultMap_Song" type="com.javaclimb.music.domain.Song" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="singer_id" jdbcType="INTEGER" property="singerId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id,song_id,song_list_id
     </sql>
@@ -67,9 +77,21 @@
         from list_song
     </select>
 
-    <select id="selectBySongListId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select *
-        from list_song
-        where song_list_id = #{songListId}
+    <select id="selectSongBySongListId" resultMap="BaseResultMap_Song" parameterType="java.lang.Integer">
+        SELECT
+            s.id AS id,
+            s.singer_id As singer_id,
+            s.name AS name,
+            s.introduction AS introduction,
+            s.create_time AS create_time,
+            s.update_time AS update_time,
+            s.pic AS pic,
+            s.url AS url
+        FROM
+            song s
+        JOIN
+            list_song ls ON s.id = ls.song_id
+        WHERE
+            ls.song_list_id = #{songListId}
     </select>
 </mapper>
