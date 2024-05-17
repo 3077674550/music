@@ -5,12 +5,22 @@ import com.javaclimb.music.domain.SongList;
 import com.javaclimb.music.service.SongListService;
 import com.javaclimb.music.utils.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.unit.DataSize;
+import org.springframework.util.unit.DataUnit;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +35,14 @@ public class SongListController {
 
     @Autowired
     private SongListService songListService;
+
+    @Configuration
+    public class MyPicConfig implements WebMvcConfigurer {
+        @Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            registry.addResourceHandler("/img/songListPic/**").addResourceLocations("file:/Users/16921/Desktop/music/img/songListPic/");
+        }
+    }
 
     /**
      * 添加歌单
@@ -95,9 +113,17 @@ public class SongListController {
      * 根据主键查询整个对象
      */
     @RequestMapping(value = "/selectByPrimaryKey",method = RequestMethod.GET)
-    public Object selectByPrimaryKey(HttpServletRequest request){
+    public ResponseEntity<Object> selectByPrimaryKey(HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
         String id = request.getParameter("id").trim();
-        return songListService.selectByPrimaryKey(Integer.parseInt(id));
+        if(songListService.selectByPrimaryKey(Integer.parseInt(id))!=null){
+            return ResponseEntity.ok(songListService.selectByPrimaryKey(Integer.parseInt(id)));
+        }else{
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"查无该对象");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonObject);
+        }
+
     }
 
     /**
@@ -112,27 +138,48 @@ public class SongListController {
      * 根据歌单标题模糊查询列表
      */
     @RequestMapping(value = "/likeTitle",method = RequestMethod.GET)
-    public Object likeTitle(HttpServletRequest request){
+    public ResponseEntity<Object> likeTitle(HttpServletRequest request){
         String title = request.getParameter("title").trim();
-        return songListService.likeTitle("%"+title+"%");
+        JSONObject jsonObject = new JSONObject();
+        if(songListService.likeTitle("%"+title+"%").isEmpty()){
+            return ResponseEntity.ok(songListService.likeTitle("%"+title+"%"));
+        }else{
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"查无该对象");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonObject);
+        }
     }
 
     /**
      * 根据歌单名字精确查询
      */
     @RequestMapping(value = "/songListOfName",method = RequestMethod.GET)
-    public Object songListOfName(HttpServletRequest request){
+    public ResponseEntity<Object> songListOfName(HttpServletRequest request){
         String title = request.getParameter("title").trim();
-        return songListService.songListOfName(title);
+        JSONObject jsonObject = new JSONObject();
+        if(songListService.songListOfName(title).isEmpty()){
+            return ResponseEntity.ok(songListService.songListOfName(title));
+        }else{
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"查无该对象");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonObject);
+        }
     }
 
     /**
      * 根据歌单风格模糊查询
      */
     @RequestMapping(value = "/likeStyle",method = RequestMethod.GET)
-    public Object likeStyle(HttpServletRequest request){
+    public ResponseEntity<Object> likeStyle(HttpServletRequest request){
         String style = request.getParameter("style").trim();
-        return songListService.likeStyle(style);
+        JSONObject jsonObject = new JSONObject();
+        if(songListService.likeStyle(style).isEmpty()){
+            return ResponseEntity.ok(songListService.likeStyle(style));
+        }else{
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"查无该对象");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonObject);
+        }
     }
 
     /**

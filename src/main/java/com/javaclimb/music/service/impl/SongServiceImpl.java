@@ -2,6 +2,7 @@ package com.javaclimb.music.service.impl;
 
 import com.javaclimb.music.dao.SongMapper;
 import com.javaclimb.music.domain.Song;
+import com.javaclimb.music.domain.SongWithSinger;
 import com.javaclimb.music.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,7 @@ public class SongServiceImpl implements SongService {
      * @param id
      */
     @Override
-    public Song selectByPrimaryKey(Integer id) {
+    public SongWithSinger selectByPrimaryKey(Integer id) {
         return songMapper.selectByPrimaryKey(id);
     }
 

@@ -1,6 +1,7 @@
 package com.javaclimb.music.service;
 
 import com.javaclimb.music.domain.Song;
+import com.javaclimb.music.domain.SongWithSinger;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface SongService {
     /**
      * 根据主键查询整个对象
      */
-    public Song selectByPrimaryKey(Integer id);
+    public SongWithSinger selectByPrimaryKey(Integer id);
     /**
      * 查询所有歌曲
      */

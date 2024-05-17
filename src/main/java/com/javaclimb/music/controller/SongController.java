@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.unit.DataSize;
 import org.springframework.util.unit.DataUnit;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -48,8 +51,8 @@ public class SongController {
     public class MyPicConfig implements WebMvcConfigurer {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/songPic/**").addResourceLocations("file:Users/16921/Desktop/music/img/songPic/");
-            registry.addResourceHandler("/song/**").addResourceLocations("file:Users/16921/Desktop/music/song/");
+            registry.addResourceHandler("/img/songPic/**").addResourceLocations("file:/Users/16921/Desktop/music/img/songPic/");
+            registry.addResourceHandler("/song/**").addResourceLocations("file:/Users/16921/Desktop/music/song/");
         }
     }
 
@@ -150,9 +153,16 @@ public class SongController {
      * 根据主键查询歌曲
      */
     @RequestMapping(value = "/select/id",method = RequestMethod.GET)
-    public Object selectById(HttpServletRequest request){
+    public ResponseEntity<Object> selectById(HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
         String id = request.getParameter("id");
-        return songService.selectByPrimaryKey(Integer.valueOf(id));
+        if(songService.selectByPrimaryKey(Integer.valueOf(id))!=null){
+            return ResponseEntity.ok(songService.selectByPrimaryKey(Integer.valueOf(id)));
+        }else{
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"找不到歌曲");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonObject);
+        }
     }
 
     /**
@@ -167,18 +177,32 @@ public class SongController {
      * 根据歌手id查询
      */
     @RequestMapping(value = "/select/singerId",method = RequestMethod.GET)
-    public Object selectBySinger(HttpServletRequest request){
+    public ResponseEntity<Object> selectBySinger(HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
         String singer_id = request.getParameter("singerId");
-        return songService.songOfSingerId(Integer.valueOf(singer_id));
+        if(!songService.songOfSingerId(Integer.valueOf(singer_id)).isEmpty()){
+            return ResponseEntity.ok(songService.songOfSingerId(Integer.valueOf(singer_id)));
+        }else{
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"找不到歌曲");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonObject);
+        }
     }
 
     /**
      * 根据歌名模糊查询
      */
     @RequestMapping(value = "/select/name",method = RequestMethod.GET)
-    public Object selectByName(HttpServletRequest request){
+    public ResponseEntity<Object> selectByName(HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
         String name = request.getParameter("name").trim();
-        return songService.songOfName("%"+name+"%");
+        if(!songService.songOfName("%"+name+"%").isEmpty()){
+            return ResponseEntity.ok(songService.songOfName("%"+name+"%"));
+        }else{
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"找不到歌曲");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonObject);
+        }
     }
 
     /**

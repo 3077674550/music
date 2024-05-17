@@ -1,6 +1,7 @@
 package com.javaclimb.music.dao;
 
 import com.javaclimb.music.domain.Song;
+import com.javaclimb.music.domain.SongWithSinger;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -23,9 +24,9 @@ public interface SongMapper {
      */
     public int delete(Integer id);
     /**
-     * 根据主键查询整个对象
+     * 根据主键查询歌曲和歌曲的歌手
      */
-    public Song selectByPrimaryKey(Integer id);
+    public SongWithSinger selectByPrimaryKey(Integer id);
     /**
      * 查询所有歌曲
      */

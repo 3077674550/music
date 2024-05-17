@@ -16,6 +16,28 @@
         <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
     </resultMap>
 
+    <resultMap id="ResultMap_SongWithSinger" type="com.javaclimb.music.domain.SongWithSinger" >
+        <id column="song_id" jdbcType="INTEGER" property="id"/>
+        <result column="song_name" jdbcType="VARCHAR" property="name"/>
+        <result column="song_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="song_update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="song_pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="song_url" jdbcType="VARCHAR" property="url"/>
+        <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
+        <result column="singer_id" jdbcType="INTEGER" property="singerId"/>
+        <association property="singer" resultMap="SingerResultMap"/>
+    </resultMap>
+
+    <resultMap id="SingerResultMap" type="com.javaclimb.music.domain.Singer">
+        <result column="singer_id" jdbcType="INTEGER" property="id"/>
+        <result column="singer_name" jdbcType="VARCHAR" property="name"/>
+        <result column="singer_sex" jdbcType="TINYINT" property="sex"/>
+        <result column="singer_pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="singer_birthday" jdbcType="TIMESTAMP" property="birthday"/>
+        <result column="singer_location" jdbcType="VARCHAR" property="location"/>
+        <result column="singer_introduction" jdbcType="VARCHAR" property="introduction"/>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id,singer_id,name,create_time,update_time,pic,url
     </sql>
@@ -98,11 +120,34 @@
         where id=#{id};
     </delete>
 
-    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" resultMap="ResultMap_SongWithSinger" parameterType="java.lang.Integer">
         select
-        <include refid="Blob_Column_List"/>
+            song.id AS song_id,
+            song.name AS song_name,
+            song.introduction AS song_introduction,
+            song.create_time AS song_create_time,
+            song.update_time AS song_update_time,
+            song.pic AS song_pic,
+            song.url AS song_url,
+            song.singer_id,
+            (
+                SELECT
+                    CONCAT(
+                        'singer_id:', singer.id,
+                        'singer_name:', singer.name,
+                        'singer_sex:', singer.sex,
+                        'singer_pic:', singer.pic,
+                        'singer_birthday:', singer.birthday,
+                        'singer_location:', singer.location,
+                        'singer_introduction:', singer.introduction
+                    )
+                FROM
+                    singer
+                WHERE
+                    singer.id = song.singer_id
+            ) AS singer_info
         from song
-        where id=#{id}
+        where song.id=#{id}
     </select>
 
     <select id="allSong" resultMap="ResultMapWithBLOBs" >
