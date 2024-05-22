@@ -3,6 +3,7 @@ package com.javaclimb.music.service;
 import com.javaclimb.music.domain.ListSong;
 import com.javaclimb.music.domain.Song;
 import com.javaclimb.music.domain.SongList;
+import com.javaclimb.music.domain.SongWithSinger;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public interface ListSongService {
      * 根据歌曲id查找
      */
 
-    List<Song> selectSongBySongListId(Integer songListId);
+    List<SongWithSinger> selectSongBySongListId(Integer songListId);
 
 
 }

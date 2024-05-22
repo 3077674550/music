@@ -24,7 +24,7 @@ public class ListSongController {
      * 在歌单中添加歌曲
      */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public Object addListSong(HttpServletRequest request){
+    public ResponseEntity<Object> addListSong(HttpServletRequest request){
         JSONObject jsonObject = new JSONObject();
         String song_id = request.getParameter("songId").trim();
         String song_list_id = request.getParameter("songListId").trim();
@@ -36,11 +36,11 @@ public class ListSongController {
         if(flag){
             jsonObject.put(Consts.CODE,1);
             jsonObject.put(Consts.MSG,"添加成功");
-            return jsonObject;
+            return ResponseEntity.ok(jsonObject);
         }
         jsonObject.put(Consts.CODE,0);
         jsonObject.put(Consts.MSG,"添加失败");
-        return jsonObject;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonObject);
     }
 
     /**
@@ -104,10 +104,10 @@ public class ListSongController {
      * 根据歌单id返回歌单的歌曲信息
      */
     @RequestMapping(value = "/select/songListId",method = RequestMethod.GET)
-    public Object selectSongBySongListId(HttpServletRequest request) {
+    public ResponseEntity<Object> selectSongBySongListId(HttpServletRequest request) {
         String song_list_id = request.getParameter("songListId").trim();
         JSONObject jsonObject = new JSONObject();
-        if (listSongServiceImpl.selectSongBySongListId(Integer.valueOf(song_list_id)).isEmpty()) {
+        if (!listSongServiceImpl.selectSongBySongListId(Integer.valueOf(song_list_id)).isEmpty()) {
             return ResponseEntity.ok(listSongServiceImpl.selectSongBySongListId(Integer.valueOf(song_list_id)));
         } else {
             jsonObject.put(Consts.CODE, 0);

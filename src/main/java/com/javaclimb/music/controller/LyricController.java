@@ -5,6 +5,8 @@ import com.javaclimb.music.domain.Lyric;
 import com.javaclimb.music.service.impl.LyricServiceImpl;
 import com.javaclimb.music.utils.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -170,13 +172,17 @@ public class LyricController {
      * 根据歌曲id返回歌词
      */
     @RequestMapping(value = "/songLyric",method = RequestMethod.GET)
-    public Object lyricsOfSong(HttpServletRequest request){
+    public ResponseEntity<Object> lyricsOfSong(HttpServletRequest request){
         JSONObject jsonObject = new JSONObject();
 
         String song_id = request.getParameter("songId").trim();
 
         List<Lyric> lyric = lyricServiceImpl.lyricsOfSong(Integer.valueOf(song_id));
-
+        if(lyric.isEmpty()){
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"找不到歌词");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonObject);
+        }
         int count = 1;
         for(Lyric lrc : lyric){
             String time = lrc.getTimestamp();
@@ -192,6 +198,6 @@ public class LyricController {
             jsonObject.put("lyric"+count,cplLyric);
             count++;
         }
-        return jsonObject;
+        return ResponseEntity.ok(jsonObject);
     }
 }
