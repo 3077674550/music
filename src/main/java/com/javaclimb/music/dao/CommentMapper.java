@@ -20,7 +20,7 @@ public interface CommentMapper {
 
     int deleteComment(Integer id);
 
-    List<Comment> allComment();
+    List<Comment> selectPageComment(Integer pageNum,Integer pageSize);
 
     List<Comment> commentOfSongId(Integer songId);
 

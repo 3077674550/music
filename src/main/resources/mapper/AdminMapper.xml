@@ -10,7 +10,7 @@
     <sql id="Base_Column_List">
         id, name, password
     </sql>
-    <select id="verifyPassword" resultType="java.lang.Integer">
+    <select id="verifyPassword" resultType="java.lang.Integer" parameterType="java.util.HashMap">
         SELECT count(*) FROM admin where name = #{arg0} and password = #{arg1} ;
     </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

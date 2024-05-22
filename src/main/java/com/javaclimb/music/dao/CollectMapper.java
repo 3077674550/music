@@ -26,7 +26,7 @@ public interface CollectMapper {
 
     int deleteCollect(@Param("userId") Integer userId, @Param("songId") Integer songId);
 
-    List<Collect> allCollect();
+    List<Collect> selectPageCollect(Integer pageNum,Integer pageSize);
 
     List<Collect> collectionOfUser(Integer userId);
 }

@@ -10,4 +10,6 @@ public class Consts {
     public static final String CODE = "code";
     /*返回信息*/
     public static final String MSG = "msg";
+    /*返回数据*/
+    public static final String DATA="data";
 }

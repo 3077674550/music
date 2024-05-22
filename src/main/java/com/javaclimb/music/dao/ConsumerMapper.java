@@ -30,7 +30,7 @@ public interface ConsumerMapper {
     //删除
     int deleteUser(Integer id);
 
-    //查询所有用户
-    List<Consumer> allUser();
+    //分页查询所有用户
+    List<Consumer> selectPageUser(Integer pageNum,Integer pageSize);
 
 }

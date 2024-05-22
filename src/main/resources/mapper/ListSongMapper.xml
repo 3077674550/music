@@ -8,14 +8,26 @@
         <result column="song_list_id" jdbcType="INTEGER" property="songListId"/>
     </resultMap>
 
-    <resultMap id="BaseResultMap_Song" type="com.javaclimb.music.domain.Song" >
-        <id column="id" jdbcType="INTEGER" property="id"/>
+    <resultMap id="ResultMap_SongWithSinger" type="com.javaclimb.music.domain.SongWithSinger" >
+        <id column="song_id" jdbcType="INTEGER" property="id"/>
+        <result column="song_name" jdbcType="VARCHAR" property="name"/>
+        <result column="song_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="song_update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="song_pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="song_url" jdbcType="VARCHAR" property="url"/>
+        <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
         <result column="singer_id" jdbcType="INTEGER" property="singerId"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <result column="pic" jdbcType="VARCHAR" property="pic"/>
-        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <association property="singer" resultMap="SingerResultMap"/>
+    </resultMap>
+
+    <resultMap id="SingerResultMap" type="com.javaclimb.music.domain.Singer">
+        <result column="singer_id" jdbcType="INTEGER" property="id"/>
+        <result column="singer_name" jdbcType="VARCHAR" property="name"/>
+        <result column="singer_sex" jdbcType="TINYINT" property="sex"/>
+        <result column="singer_pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="singer_birthday" jdbcType="TIMESTAMP" property="birthday"/>
+        <result column="singer_location" jdbcType="VARCHAR" property="location"/>
+        <result column="singer_introduction" jdbcType="VARCHAR" property="introduction"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -77,21 +89,32 @@
         from list_song
     </select>
 
-    <select id="selectSongBySongListId" resultMap="BaseResultMap_Song" parameterType="java.lang.Integer">
+    <select id="selectSongBySongListId" resultMap="ResultMap_SongWithSinger" parameterType="java.lang.Integer">
         SELECT
-            s.id AS id,
-            s.singer_id As singer_id,
-            s.name AS name,
-            s.introduction AS introduction,
-            s.create_time AS create_time,
-            s.update_time AS update_time,
-            s.pic AS pic,
-            s.url AS url
+            song.id AS song_id,
+            song.name AS song_name,
+            song.introduction AS song_introduction,
+            song.create_time AS song_create_time,
+            song.update_time AS song_update_time,
+            song.pic AS song_pic,
+            song.url AS song_url,
+            song.singer_id,
+            CONCAT(
+                    'singer_id:', singer.id,
+                    'singer_name:', singer.name,
+                    'singer_sex:', singer.sex,
+                    'singer_pic:', singer.pic,
+                    'singer_birthday:', singer.birthday,
+                    'singer_location:', singer.location,
+                    'singer_introduction:', singer.introduction
+            ) AS singer_info
         FROM
-            song s
-        JOIN
-            list_song ls ON s.id = ls.song_id
+            song
+                JOIN
+            list_song ON song.id = list_song.song_id
+                JOIN
+            singer ON song.singer_id = singer.id
         WHERE
-            ls.song_list_id = #{songListId}
+            list_song.song_list_id = #{songListId};
     </select>
 </mapper>

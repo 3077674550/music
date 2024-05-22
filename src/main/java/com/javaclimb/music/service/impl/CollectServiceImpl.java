@@ -34,10 +34,10 @@ public class CollectServiceImpl implements CollectService {
     }
 
     @Override
-    public List<Collect> allCollect()
+    public List<Collect> selectPageCollect(Integer pageNum,Integer pageSize)
 
     {
-        return collectMapper.allCollect();
+        return collectMapper.selectPageCollect(pageNum,pageSize);
     }
 
     @Override

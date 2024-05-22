@@ -22,7 +22,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.ws.Response;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -168,9 +167,9 @@ public class SongController {
     /**
      * 查询所有歌曲
      */
-    @RequestMapping(value = "/all",method = RequestMethod.GET)
-    public Object allSong(){
-        return songService.allSong();
+    @RequestMapping(value = "/selectPageSong",method = RequestMethod.GET)
+    public Object selectPageSong(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+        return songService.selectPageSong((pageNum-1)*pageSize,pageSize);
     }
 
     /**

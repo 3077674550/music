@@ -30,9 +30,9 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public List<Comment> allComment()
+    public List<Comment> selectPageComment(Integer pageNum,Integer pageSize)
     {
-        return commentMapper.allComment();
+        return commentMapper.selectPageComment(pageNum,pageSize);
     }
 
     @Override

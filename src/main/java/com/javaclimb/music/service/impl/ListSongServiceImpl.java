@@ -4,6 +4,7 @@ import com.javaclimb.music.dao.ListSongMapper;
 import com.javaclimb.music.domain.ListSong;
 import com.javaclimb.music.domain.Song;
 import com.javaclimb.music.domain.SongList;
+import com.javaclimb.music.domain.SongWithSinger;
 import com.javaclimb.music.service.ListSongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,7 +72,7 @@ public class ListSongServiceImpl implements ListSongService {
      * @param songListId
      */
     @Override
-    public List<Song> selectSongBySongListId(Integer songListId) {
+    public List<SongWithSinger> selectSongBySongListId(Integer songListId) {
         return listSongMapper.selectSongBySongListId(songListId);
     }
 

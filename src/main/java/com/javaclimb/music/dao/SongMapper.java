@@ -28,9 +28,9 @@ public interface SongMapper {
      */
     public SongWithSinger selectByPrimaryKey(Integer id);
     /**
-     * 查询所有歌曲
+     * 分页查询歌曲
      */
-    public List<Song> allSong();
+    public List<Song> selectPageSong(Integer pageNum,Integer pageSize);
     /**
      * 根据歌手id查询
      */

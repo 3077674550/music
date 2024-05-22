@@ -19,7 +19,7 @@ public interface ConsumerService {
     Consumer selectByPrimaryKey(Integer id);
 
     //查询所有用户
-    List<Consumer> allConsumer();
+    List<Consumer> selectPageConsumer(Integer pageNum,Integer pageSize);
 
     //验证
     boolean vertifyPassword(String username,String password);

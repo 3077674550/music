@@ -62,8 +62,8 @@ public class SongListServiceImpl implements SongListService {
      *
      */
     @Override
-    public List<SongList> allSongList() {
-        return songListMapper.allSongList();
+    public List<SongList> selectPageSongList(Integer pageNum,Integer pageSize) {
+        return songListMapper.selectPageSongList(pageNum,pageSize);
     }
 
     /**

@@ -14,7 +14,7 @@ public interface CollectService {
 
     boolean deleteCollect(Integer userId, Integer songId);
 
-    List<Collect> allCollect();
+    List<Collect> selectPageCollect(Integer pageNum,Integer pageSize);
 
     List<Collect> collectionOfUser(Integer userId);
 }

@@ -56,11 +56,11 @@ public class SongServiceImpl implements SongService {
     }
 
     /**
-     * 查询所有歌曲
+     * 分页查询歌曲
      */
     @Override
-    public List<Song> allSong() {
-        return songMapper.allSong();
+    public List<Song> selectPageSong(Integer pageNum,Integer pageSize) {
+        return songMapper.selectPageSong(pageNum,pageSize);
     }
 
     /**

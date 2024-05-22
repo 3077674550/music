@@ -129,9 +129,9 @@ public class SongListController {
     /**
      * 查询所有歌单
      */
-    @RequestMapping(value = "/allSongList",method = RequestMethod.GET)
-    public Object allSongList(){
-        return songListService.allSongList();
+    @RequestMapping(value = "/selectPageSongList",method = RequestMethod.GET)
+    public Object selectPageSongList(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+        return songListService.selectPageSongList((pageNum-1)*pageSize,pageSize);
     }
 
     /**
@@ -141,7 +141,7 @@ public class SongListController {
     public ResponseEntity<Object> likeTitle(HttpServletRequest request){
         String title = request.getParameter("title").trim();
         JSONObject jsonObject = new JSONObject();
-        if(songListService.likeTitle("%"+title+"%").isEmpty()){
+        if(!songListService.likeTitle("%"+title+"%").isEmpty()){
             return ResponseEntity.ok(songListService.likeTitle("%"+title+"%"));
         }else{
             jsonObject.put(Consts.CODE,0);
@@ -173,7 +173,7 @@ public class SongListController {
     public ResponseEntity<Object> likeStyle(HttpServletRequest request){
         String style = request.getParameter("style").trim();
         JSONObject jsonObject = new JSONObject();
-        if(songListService.likeStyle(style).isEmpty()){
+        if(!songListService.likeStyle(style).isEmpty()){
             return ResponseEntity.ok(songListService.likeStyle(style));
         }else{
             jsonObject.put(Consts.CODE,0);

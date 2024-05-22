@@ -129,9 +129,9 @@ public class SingerController {
     }
 
     //查询所有歌手
-    @GetMapping("/allSinger")
-    public Object allSinger(HttpServletRequest request){
-        return singerService.allSinger();
+    @GetMapping("/selectPageSinger")
+    public Object selectPageSinger(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+        return singerService.selectPageSinger((pageNum-1)*pageSize,pageSize);
     }
 
     //根据歌手名字模糊查询歌手
@@ -153,7 +153,7 @@ public class SingerController {
      */
     @ResponseBody
     @RequestMapping(value = "/update/singerPic",method = RequestMethod.POST)
-    public Object updateSongPic(@RequestParam("pic") MultipartFile pic, @RequestParam("id") int id){
+    public Object updateSingPic(@RequestParam("pic") MultipartFile pic, @RequestParam("id") int id){
         JSONObject jsonObject = new JSONObject();
 
         if(pic.isEmpty()){

@@ -5,10 +5,7 @@ import com.javaclimb.music.domain.Collect;
 import com.javaclimb.music.service.CollectService;
 import com.javaclimb.music.utils.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -64,9 +61,9 @@ public class CollectController {
     }
 
     //    返回所有用户收藏列表
-    @RequestMapping(value = "/collection", method = RequestMethod.GET)
-    public Object allCollection(){
-        return collectService.allCollect();
+    @RequestMapping(value = "/selectPageCollection", method = RequestMethod.GET)
+    public Object selectPageCollection(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+        return collectService.selectPageCollect((pageNum-1)*pageSize,pageSize);
     }
 
     //    返回的指定用户ID收藏列表

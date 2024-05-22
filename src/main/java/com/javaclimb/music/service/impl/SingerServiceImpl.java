@@ -35,8 +35,8 @@ public class SingerServiceImpl implements SingerService {
     }
 
     @Override
-    public List<Singer> allSinger() {
-        return singerMapper.allSinger();
+    public List<Singer> selectPageSinger(Integer pageNum,Integer pageSize) {
+        return singerMapper.selectPageSinger(pageNum,pageSize);
     }
 
     @Override

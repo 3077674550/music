@@ -29,7 +29,7 @@ public interface SingerMapper {
     /**
      * 查询所有歌手
      */
-    public List<Singer> allSinger();
+    public List<Singer> selectPageSinger(Integer pageNum,Integer pageSize);
     /**
      * 根据标歌手名字模糊查询列表
      */

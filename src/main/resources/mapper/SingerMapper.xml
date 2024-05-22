@@ -108,10 +108,10 @@
         where id=#{id}
     </select>
 
-    <select id="allSinger" resultMap="BaseResultMap" >
+    <select id="selectPageSinger" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List"/>
-        from Singer
+        from Singer limit #{arg0},#{arg1}
     </select>
 
     <select id="SingerOfName" resultMap="BaseResultMap" parameterType="java.lang.String">

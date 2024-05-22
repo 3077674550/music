@@ -56,8 +56,8 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    public List<Consumer> allConsumer() {
-        return consumerMapper.allUser();
+    public List<Consumer> selectPageConsumer(Integer pageNum,Integer pageSize) {
+        return consumerMapper.selectPageUser(pageNum,pageSize);
     }
 }
 

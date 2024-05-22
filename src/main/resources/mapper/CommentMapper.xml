@@ -21,10 +21,9 @@
         from comment
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="allComment" resultMap="BaseResultMap">
+    <select id="selectPageComment" resultMap="BaseResultMap">
         select *
-
-        from comment
+        from comment limit #{arg0},#{arg1}
     </select>
     <select id="commentOfSongId" resultMap="BaseResultMap">
         select *

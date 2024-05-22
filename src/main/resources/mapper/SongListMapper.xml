@@ -87,10 +87,10 @@
         where id=#{id}
     </select>
 
-    <select id="allSongList" resultMap="ResultMapWithBLOBs" >
+    <select id="selectPageSongList" resultMap="ResultMapWithBLOBs" >
         select
         <include refid="Blob_Column_List"/>
-        from song_list
+        from song_list limit #{arg0},#{arg1}
     </select>
 
     <select id="songListOfName" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">

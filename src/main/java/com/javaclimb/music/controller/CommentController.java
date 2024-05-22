@@ -5,10 +5,7 @@ import com.javaclimb.music.domain.Comment;
 import com.javaclimb.music.service.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -54,9 +51,9 @@ public class CommentController {
     }
 
     //    获取所有评论列表
-    @RequestMapping(value = "/comment", method = RequestMethod.GET)
-    public Object allComment(){
-        return commentService.allComment();
+    @RequestMapping(value = "/selectPageComment", method = RequestMethod.GET)
+    public Object selectPageComment(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+        return commentService.selectPageComment((pageNum-1)*pageSize,pageSize);
     }
 
     //    获得指定歌曲ID的评论列表

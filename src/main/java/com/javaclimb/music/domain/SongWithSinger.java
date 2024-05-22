@@ -1,7 +1,5 @@
 package com.javaclimb.music.domain;
 
-import java.util.Date;
-
 public class SongWithSinger extends Song{
     //账号
     private Singer singer;

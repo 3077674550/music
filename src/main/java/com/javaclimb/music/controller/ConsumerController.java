@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.javaclimb.music.domain.Consumer;
 import com.javaclimb.music.service.ConsumerService;
 import com.javaclimb.music.utils.Consts;
+import com.javaclimb.music.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,8 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class ConsumerController {
@@ -98,7 +101,7 @@ public class ConsumerController {
     //    判断是否登录成功
     @ResponseBody
     @RequestMapping(value = "/user/login/status", method = RequestMethod.POST)
-    public Object loginStatus(HttpServletRequest req, HttpSession session){
+    public Object loginStatus(HttpServletRequest req){
 
         JSONObject jsonObject = new JSONObject();
         String username = req.getParameter("username").trim();
@@ -107,10 +110,14 @@ public class ConsumerController {
         boolean res = consumerService.vertifyPassword(username, password);
 
         if (res){
+            Map<String,Object> claims=new HashMap<>();
+            claims.put("username",username);
+            claims.put("password",password);
+            String Jwt= JwtUtils.generateJWT(claims);
+
             jsonObject.put(Consts.CODE, 1);
             jsonObject.put(Consts.MSG, "登录成功");
-            jsonObject.put("userMsg", consumerService.getByUsername(username));
-            session.setAttribute("username", username);
+            jsonObject.put(Consts.DATA,Jwt);
             return jsonObject;
         }else {
             jsonObject.put(Consts.CODE, 0);
@@ -121,9 +128,9 @@ public class ConsumerController {
     }
 
     //    返回所有用户
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public Object allUser(){
-        return consumerService.allConsumer();
+    @RequestMapping(value = "/selectPageUser", method = RequestMethod.GET)
+    public Object selectPageUser(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+        return consumerService.selectPageConsumer((pageNum-1)*pageSize,pageSize);
     }
 
     //    返回指定ID的用户

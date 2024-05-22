@@ -29,7 +29,7 @@ public interface SongListMapper {
     /**
      * 查询所有歌单
      */
-    public List<SongList> allSongList();
+    public List<SongList> selectPageSongList(Integer pageNum,Integer pageSize);
     /**
      * 根据标题精确查询歌单列表
      */
